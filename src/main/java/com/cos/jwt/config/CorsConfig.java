@@ -5,13 +5,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 public class CorsConfig {
 
     // 이건 filter에 등록을 해주어야 한다
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
@@ -20,6 +21,6 @@ public class CorsConfig {
         config.addAllowedHeader("*"); // 모든 header에 응답을 허용
         source.registerCorsConfiguration("/api/**", config); // 모든 post, get, put, patch, delete 요청을 허용하겠다.
 
-        return source;
+        return new CorsFilter(source);
     }
 }
